@@ -9,12 +9,18 @@ export type ItemType = "folder" | "file" | null;
 
 interface FolderComponentProps {
   structure: Files;
-  handleSetFolderStructure: (newFolder: Files, root: string) => void;
+  handleSetFolderStructure: (
+    newFolder: Files,
+    root: string,
+    folderDept: number
+  ) => void;
+  dept: number;
 }
 
 export const FolderComponent: React.FC<FolderComponentProps> = ({
   structure,
   handleSetFolderStructure,
+  dept,
 }) => {
   const [showNewElementNameInput, setShowNewElementNameInput] =
     useState<ItemType>(null);
@@ -22,13 +28,16 @@ export const FolderComponent: React.FC<FolderComponentProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleBlur = () => {
-    handleSetFolderStructure(
-      {
-        name: newElementName,
-        ...(showNewElementNameInput === "folder" && { folder: [] }),
-      },
-      structure.name
-    );
+    if (newElementName) {
+      handleSetFolderStructure(
+        {
+          name: newElementName,
+          ...(showNewElementNameInput === "folder" && { folder: [] }),
+        },
+        structure.name,
+        dept
+      );
+    }
     setShowNewElementNameInput(null);
     setNewElementName("");
   };
@@ -85,6 +94,7 @@ export const FolderComponent: React.FC<FolderComponentProps> = ({
               key={index}
               structure={folder}
               handleSetFolderStructure={handleSetFolderStructure}
+              dept={dept + 1}
             />
           );
         })}

@@ -60,7 +60,12 @@ export const FolderComponent: React.FC<FolderComponentProps> = ({
       }}
     >
       <div style={{ display: "flex", flex: 1, alignItems: "center" }}>
-        <div onClick={() => setShowFolderInternals((prevState) => !prevState)}>
+        <div
+          onClick={() =>
+            structure.folder &&
+            setShowFolderInternals((prevState) => !prevState)
+          }
+        >
           {!isRootFolder && "└─"}
           {structure.folder ? "📁" : "📄"} {structure.name}
         </div>

@@ -43,8 +43,6 @@ export const FolderComponent: React.FC<FolderComponentProps> = ({
     setNewElementName("");
   };
 
-  console.log(showFolderInternals);
-
   const isRootFolder = useMemo(
     () => structure.name === "root",
     [structure.name]
